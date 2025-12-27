@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Dinu – dinushay.de</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Dinu - Developer & Content Creator">
+
+  <link rel="icon" type="image/png" href="https://dinushay.de/media/icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg1: #0b1220;
+      --bg2: #0f1b2e;
+      --card: #0f1729cc;
+      --muted: #8594b5;
+      --brand: #00c3ff;
+      --brand-2: #5a8bff;
+      --text: #e8eefc;
+      --ring: #1f5cff55;
+      --shadow: 0 10px 40px rgba(0,0,0,.35);
+      --radius: 20px;
+      --overlay: rgba(0,0,0,.65);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #18324d 0%, transparent 60%),
+        radial-gradient(1200px 800px at 110% 110%, #152a44 0%, transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow: hidden;
+    }
+
+    /* Background Canvas */
+    canvas#bg {
+      position: fixed; inset: 0; z-index: -1;
+      filter: blur(0.3px); opacity: .35;
+      pointer-events: none;
+    }
+
+    /* Layout */
+    .wrap {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    /* Card Design */
+    .card {
+      width: min(92vw, 480px);
+      background: var(--card);
+      backdrop-filter: blur(14px) saturate(120%);
+      border: 1px solid #1a2a44;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 22px;
+      animation: pop 420ms cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(8px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Profile Picture */
+    .pfp {
+      width: 104px; height: 104px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      margin: 0 auto 14px;
+      border: 2px solid #1f3d6b;
+      box-shadow: 0 6px 22px rgba(0,0,0,.35);
+      background: #0b1220;
+    }
+
+    h1 { margin: 0; text-align: center; font-size: 1.45rem; font-weight: 800; letter-spacing: .1px; }
+    .handle { text-align: center; margin: 6px 0 18px; color: var(--muted); font-size: .95rem; }
+
+    /* Buttons */
+    .btns { display: grid; gap: 10px; margin-top: 6px; }
+
+    .btn {
+      --bg: #13243d; --bd: #203757; --fg: var(--text);
+      display: flex; align-items: center; justify-content: center; gap: .65rem;
+      padding: 12px 16px; border-radius: 14px;
+      text-decoration: none; color: var(--fg); background: var(--bg);
+      border: 1px solid var(--bd);
+      transition: transform .12s ease, box-shadow .12s ease, background .2s ease, border-color .2s ease;
+      position: relative; isolation: isolate; cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn:after {
+      content: ""; position: absolute; inset: -1px; border-radius: inherit;
+      box-shadow: 0 0 0 0 var(--ring); transition: box-shadow .2s ease;
+      pointer-events: none; z-index: -1;
+    }
+
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+    .btn:hover:after { box-shadow: 0 0 0 6px var(--ring); }
+    .btn i { width: 1.2rem; text-align: center; }
+
+    /* Button Variants */
+    .accent { --bg: linear-gradient(135deg, #0b2e4a, #0c2440); --bd: #224c77; }
+    
+    .highlight {
+      border-color: #00ff88; color: #00ff88;
+      box-shadow: 0 0 14px #00ff8866;
+      animation: glow 1.5s infinite alternate;
+    }
+    .highlight:hover { background: rgba(0,255,136,0.12); color: #001a0f; }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 12px #00ff8866; }
+      to { box-shadow: 0 0 26px #00ff88cc; }
+    }
+
+    .footer { text-align: center; margin-top: 14px; font-size: .8rem; color: #93a5c6; opacity: .85; }
+
+    /* Modal & Overlay */
+    .overlay {
+      position: fixed; inset: 0; display: none;
+      align-items: center; justify-content: center;
+      background: var(--overlay); backdrop-filter: blur(6px);
+      z-index: 999;
+    }
+    .overlay.show { display: flex; animation: overlayIn .2s ease-out; }
+    .overlay.hide { animation: overlayOut .18s ease-in forwards; }
+    
+    @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes overlayOut { from { opacity: 1; } to { opacity: 0; } }
+
+    .modal {
+      width: min(92vw, 520px); background: #12203a; color: var(--text);
+      border: 1px solid #23426c; border-radius: 16px;
+      box-shadow: var(--shadow);
+      transform-origin: center;
+      animation: modalIn .22s cubic-bezier(.2,.9,.2,1);
+    }
+    .overlay.hide .modal { animation: modalOut .18s ease-in forwards; }
+
+    @keyframes modalIn { from { opacity: 0; transform: translateY(6px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes modalOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-6px) scale(.985); } }
+
+    .modal header {
+      padding: 16px 18px; border-bottom: 1px solid #1e365a;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, #10233d, #0f1d33);
+      border-radius: 16px 16px 0 0;
+    }
+    .modal header h3 { margin: 0; font-size: 1.05rem; }
+    .close { border: none; background: transparent; color: #a9c0e6; font-size: 1.2rem; cursor: pointer; transition: color .2s; }
+    .close:hover { color: #fff; }
+
+    .modal .content { padding: 18px; }
+    
+    .discord-box {
+      background: #0f1c31; border: 1px solid #23426c;
+      border-radius: 12px; padding: 14px;
+      display: flex; align-items: center; gap: 10px; justify-content: space-between;
+    }
+    .discord-handle { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 1rem; }
+    
+    .copy {
+      border: 1px solid #2a67b7; background: linear-gradient(135deg, #1a3b66, #214b84);
+      color: #dff1ff; padding: 8px 12px; border-radius: 10px;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; transition: transform .1s;
+    }
+    .copy:active { transform: translateY(1px); }
+
+    .hint { margin-top: 12px; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+
+    @media (max-width: 420px) { .card { padding: 22px 16px; } }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <section class="card" role="region" aria-labelledby="title">
+      <img src="dinu.png" width="208" height="208" alt="Profilbild von Dinu" class="pfp" loading="eager" decoding="async" onerror="this.src='https://placehold.co/208x208/0b1220/e8eefc?text=Dinu'">
+
+      <h1 id="title">Dinu</h1>
+      <div class="handle">@dinu_shay</div>
+
+      <nav class="btns" aria-label="Linksammlung">
+        
+        <!-- Email -->
+        <a class="btn highlight" href="mailto:dinu@dinushay.de">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Email</span>
+        </a>
+
+        <!-- Projekte -->
+        <a class="btn" href="https://dinushay.de/projekte">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>Projekte</span>
+        </a>
+
+        <!-- GitHub -->
+        <a class="btn" href="https://github.com/dinushay" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i>
+          <span>GitHub</span>
+        </a>
+
+        <!-- Twitch -->
+        <a class="btn" href="https://twitch.tv/dinu_shay" target="_blank" rel="noopener">
+          <i class="fa-brands fa-twitch"></i>
+          <span>Twitch</span>
+        </a>
+
+        <!-- TikTok -->
+        <a class="btn" href="https://tiktok.com/@dinu_shay" target="_blank" rel="noopener">
+          <i class="fa-brands fa-tiktok"></i>
+          <span>TikTok</span>
+        </a>
+
+        <!-- Discord Modal Trigger -->
+        <button class="btn" id="discordBtn" type="button">
+          <i class="fa-brands fa-discord"></i>
+          <span>Discord</span>
+        </button>
+
+      </nav>
+
+      <div class="footer">&copy; 2025 dinushay.de</div>
+    </section>
+  </main>
+
+  <!-- Discord Modal -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dlg-title">
+      <header>
+        <h3 id="dlg-title"><i class="fa-brands fa-discord"></i> Discord</h3>
+        <button class="close" id="closeDlg" aria-label="Schließen">&times;</button>
+      </header>
+      <div class="content">
+        <p id="discordIntro">Mein Discord-Name ist:</p>
+        <div class="discord-box">
+          <span class="discord-handle" id="handleText">dinu_shay</span>
+          <button class="copy" id="copyBtn" type="button">
+            <i class="fa-regular fa-copy"></i> <span id="copyLabel">Kopieren</span>
+          </button>
+        </div>
+        <div class="hint" id="discordHint">Klicke auf <b>Kopieren</b>, um den Namen in die Zwischenablage zu übernehmen.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      /* --- 1. Language Detection & Localization --- */
+      const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
+
+      if (isEnglish) {
+        // Update Discord Modal Text
+        document.getElementById('discordIntro').textContent = "My Discord username is:";
+        document.getElementById('discordHint').innerHTML = "Click <b>Copy</b> to copy the username to your clipboard.";
+        document.getElementById('copyLabel').textContent = "Copy";
+        document.getElementById('closeDlg').setAttribute('aria-label', "Close");
+        // Update document title/alt text if strictly needed, but mostly names here.
+      }
+
+
+      /* --- 2. Modal Logic --- */
+      const overlay = document.getElementById('overlay');
+      const discordBtn = document.getElementById('discordBtn');
+      const closeDlg = document.getElementById('closeDlg');
+      const copyBtn = document.getElementById('copyBtn');
+      const handleText = document.getElementById('handleText').textContent.trim();
+
+      function openOverlay() {
+        overlay.classList.remove('hide');
+        overlay.classList.add('show');
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeOverlay() {
+        overlay.classList.remove('show');
+        overlay.classList.add('hide');
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          overlay.setAttribute('aria-hidden', 'true');
+        }, 190);
+      }
+
+      discordBtn.addEventListener('click', () => requestAnimationFrame(openOverlay));
+      closeDlg.addEventListener('click', closeOverlay);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) closeOverlay();
+      });
+
+      // Copy Functionality
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(handleText);
+          
+          const originalIcon = copyBtn.innerHTML;
+          const successMsg = isEnglish ? 'Copied!' : 'Kopiert!';
+          
+          copyBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${successMsg}`;
+          copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+          copyBtn.style.borderColor = '#059669';
+
+          setTimeout(() => {
+            copyBtn.innerHTML = originalIcon;
+            copyBtn.style.background = ''; // reset to CSS default
+            copyBtn.style.borderColor = '';
+          }, 2000);
+
+        } catch (err) {
+          console.error('Failed to copy!', err);
+          alert(isEnglish ? 'Could not copy automatically.' : 'Konnte nicht automatisch kopiert werden.');
+        }
+      });
+
+
+      /* --- 3. Particle Background --- */
+      const c = document.getElementById('bg');
+      const ctx = c.getContext('2d');
+      let w, h, parts;
+
+      function resize() {
+        w = c.width = window.innerWidth;
+        h = c.height = window.innerHeight;
+        
+        // Dynamic particle count based on screen area
+        const count = Math.round((w * h) / 22000);
+        
+        parts = new Array(count).fill(0).map(() => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.6 + 0.2,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          a: Math.random() * 0.7 + 0.15
+        }));
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#8ecaff';
+        
+        parts.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Wrap around edges
+          if (p.x < -5) p.x = w + 5;
+          if (p.x > w + 5) p.x = -5;
+          if (p.y < -5) p.y = h + 5;
+          if (p.y > h + 5) p.y = -5;
+
+          ctx.globalAlpha = p.a;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      animate();
+
+    });
+  </script>
+</body>
+</html>
