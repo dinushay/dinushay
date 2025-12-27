@@ -21,21 +21,6 @@ I'm a developer based in **Germany**, passionate about building tools. My focus 
 
 ---
 
-### 📊 GitHub Stats
-
-<div align="center">
-  <a href="https://github.com/dinushay">
-  <img align="center" src="https://github-readme-stats.vercel.app/api?username=dinushay&show_icons=true&theme=dracula&hide_border=true&count_private=true" alt="Dinushay's GitHub Stats" />
-  </a>
-  <br/>
-  <br/>
-  <a href="https://github.com/dinushay">
-  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=dinushay&layout=compact&theme=dracula&hide_border=true" alt="Top Languages" />
-  </a>
-</div>
-
----
-
 ### 📫 Connect with Me
 
 <div align="center"> 
