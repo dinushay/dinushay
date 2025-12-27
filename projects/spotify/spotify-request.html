@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Auth Redirect</title>
+</head>
+<body>
+  <script>
+    const clientId = "1e43c5840022430c8b1b8d050bac250a";
+    const redirectUri = "https://dinushay.de/projects/spotify/callback.html";
+    const scopes = "user-read-playback-state";
+
+    const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+    // automatische Weiterleitung
+    window.location.href = authUrl;
+  </script>
+</body>
+</html>
