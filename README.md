@@ -21,7 +21,7 @@ I'm a developer based in **Germany**, passionate about building tools. My focus 
 
 ---
 
-### 📊 Contribution Stats
+### 📊 Contribution Snake
 
 <div align="center">
   <img src="https://github.com/dinushay/dinushay/raw/output/github-contribution-grid-snake-dark.svg" alt="Snake Animation" />
