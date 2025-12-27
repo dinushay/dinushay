@@ -207,7 +207,7 @@
         <!-- Projekte -->
         <a class="btn" href="https://dinushay.de/projekte">
           <i class="fa-solid fa-diagram-project"></i>
-          <span>Projekte</span>
+          <span id="projectsLabel">Projekte</span>
         </a>
 
         <!-- GitHub -->
@@ -267,6 +267,10 @@
       const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
 
       if (isEnglish) {
+        // Translate Projects Button
+        const projectsLabel = document.getElementById('projectsLabel');
+        if (projectsLabel) projectsLabel.textContent = "Projects";
+
         // Update Discord Modal Text
         document.getElementById('discordIntro').textContent = "My Discord username is:";
         document.getElementById('discordHint').innerHTML = "Click <b>Copy</b> to copy the username to your clipboard.";
