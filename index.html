@@ -26,17 +26,22 @@
     }
 
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    
+    html {
+      background-color: #0b1220; 
+    }
     
     body {
       margin: 0;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--text);
+      
       background:
         radial-gradient(1200px 800px at 10% -10%, #18324d 0%, transparent 60%),
         radial-gradient(1200px 800px at 110% 110%, #152a44 0%, transparent 60%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
-      overflow: hidden;
+
+      min-height: 100dvh;
     }
 
     /* Background Canvas */
