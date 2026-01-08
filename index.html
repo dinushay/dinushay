@@ -113,6 +113,7 @@
 
     /* Button Variants */
     .accent { --bg: linear-gradient(135deg, #0b2e4a, #0c2440); --bd: #224c77; }
+    .full { width: 100%; } /* Utility for full width buttons */
     
     .highlight {
       border-color: #00ff88; color: #00ff88;
@@ -179,6 +180,14 @@
       font-size: 0.9rem; transition: transform .1s;
     }
     .copy:active { transform: translateY(1px); }
+
+    .invite-sep {
+      margin: 20px 0 16px;
+      border-top: 1px solid #1e365a;
+      padding-top: 16px;
+      text-align: center;
+    }
+    .invite-text { margin: 0 0 12px; font-size: 0.95rem; color: #a9c0e6; }
 
     .hint { margin-top: 12px; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
 
@@ -248,6 +257,7 @@
         <button class="close" id="closeDlg" aria-label="Schließen">&times;</button>
       </header>
       <div class="content">
+        <!-- Username Copy Section -->
         <p id="discordIntro">Mein Discord-Name ist:</p>
         <div class="discord-box">
           <span class="discord-handle" id="handleText">dinu_shay</span>
@@ -256,6 +266,16 @@
           </button>
         </div>
         <div class="hint" id="discordHint">Klicke auf <b>Kopieren</b>, um den Namen in die Zwischenablage zu übernehmen.</div>
+
+        <!-- NEW: Invite Link Section -->
+        <div class="invite-sep">
+          <p class="invite-text" id="inviteIntro">Oder tritt direkt dem Server bei:</p>
+          <a class="btn accent full" href="https://discord.gg/wYqGmafvQR" target="_blank" rel="noopener">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            <span id="btnJoin">Beitreten</span>
+          </a>
+        </div>
+
       </div>
     </div>
   </div>
@@ -276,7 +296,10 @@
         document.getElementById('discordHint').innerHTML = "Click <b>Copy</b> to copy the username to your clipboard.";
         document.getElementById('copyLabel').textContent = "Copy";
         document.getElementById('closeDlg').setAttribute('aria-label', "Close");
-        // Update document title/alt text if strictly needed, but mostly names here.
+        
+        // Translate new Invite Text
+        document.getElementById('inviteIntro').textContent = "Or join the server directly:";
+        document.getElementById('btnJoin').textContent = "Join Server";
       }
 
 
@@ -389,4 +412,3 @@
   </script>
 </body>
 </html>
-
