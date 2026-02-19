@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects | Meine Projekte</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -29,14 +24,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #475569; 
         }
-        
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .card-hover {
             transition: all 0.3s ease;
         }
@@ -45,8 +38,6 @@
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
             border-color: rgba(99, 102, 241, 0.5);
         }
-        
-        /* Modal Animation */
         .modal-enter {
             opacity: 0;
             transform: scale(0.95);
@@ -68,17 +59,12 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col relative overflow-x-hidden">
-
-    <!-- Background Elements -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-900/20 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/20 rounded-full blur-[120px]"></div>
     </div>
-
-    <!-- Navigation -->
     <nav class="w-full py-6 px-4 md:px-8 flex justify-between items-center max-w-7xl mx-auto z-10">
         <div class="flex items-center gap-3">
-            <!-- Logo Image -->
             <img src="https://dinushay.de/dinu.png" alt="Logo" class="w-10 h-10 rounded-lg shadow-lg shadow-indigo-500/20 object-cover bg-slate-800" onerror="this.src='https://placehold.co/40x40/4f46e5/white?text=D'">
             <h1 class="font-bold text-xl tracking-tight text-white">dinushay.de</h1>
         </div>
@@ -87,8 +73,6 @@
             <span id="current-lang-text">EN</span>
         </button>
     </nav>
-
-    <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-12 max-w-6xl z-10">
         <div class="text-center mb-16">
             <h2 id="hero-title" class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 mb-4">
@@ -98,13 +82,8 @@
                 A collection of my Minecraft plugins, Discord bots, and services.
             </p>
         </div>
-
-        <!-- Projects Grid -->
         <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-12">
-            <!-- Content injected via JS -->
         </div>
-
-        <!-- More Projects Button -->
         <div class="text-center">
             <a href="https://github.com/dinushay?tab=repositories" target="_blank" class="inline-flex items-center gap-3 px-6 py-4 rounded-xl glass-panel hover:bg-slate-800/80 text-slate-300 hover:text-white transition-all group border-slate-700/50 hover:border-indigo-500/50">
                 <i class="fa-brands fa-github text-2xl"></i>
@@ -113,21 +92,14 @@
             </a>
         </div>
     </main>
-
-    <!-- Footer -->
     <footer class="py-8 text-center text-slate-600 text-sm z-10">
         <p>&copy; 2026 dinushay.de</p>
     </footer>
-
-    <!-- Modal Backdrop -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
-        <!-- Modal Content -->
         <div id="modal-content" class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative transform scale-95 transition-transform duration-300">
-            
             <button id="close-modal" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-800">
                 <i class="fa-solid fa-times"></i>
             </button>
-
             <div class="mb-6">
                 <div id="modal-icon" class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-2xl mb-4">
                     <i class="fa-solid fa-cube"></i>
@@ -138,11 +110,8 @@
                     Description goes here.
                 </div>
             </div>
-
             <div class="space-y-3" id="modal-actions">
-                <!-- Buttons injected via JS -->
             </div>
-            
             <div id="modal-contact" class="hidden mt-4 pt-4 border-t border-slate-800">
                 <p class="text-slate-300 mb-3 text-sm" id="modal-contact-text"></p>
                 <div class="flex flex-col gap-2">
@@ -156,29 +125,10 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
-
     <script>
-        // --- Data Configuration ---
         const projects = [
-            {
-                id: 'folia',
-                icon: 'fa-cube',
-                color: 'text-green-400',
-                bgColor: 'bg-green-400/10',
-                title: 'FoliaChallenges',
-                type: { en: 'Minecraft Folia Plugin', de: 'Minecraft Folia Plugin' },
-                desc: {
-                    en: 'A Minecraft challenge plugin only for Folia servers for challenges (like Random Item Battle) designed for many players to spread out.',
-                    de: 'Ein Minecraft Challenge-Plugin speziell für Folia-Server (z.B. für Random Item Battle), entwickelt für viele Spieler, die sich über die Welt verteilen.'
-                },
-                links: [
-                    { label: 'GitHub', url: 'https://github.com/dinushay/foliachallenges', icon: 'fa-brands fa-github', style: 'github' },
-                    { label: 'Modrinth', url: 'https://modrinth.com/plugin/foliachallenges', icon: 'fa-solid fa-box-open', style: 'primary' }
-                ]
-            },
             {
                 id: 'cliplink',
                 icon: 'fa-robot',
@@ -249,16 +199,13 @@
             }
         };
 
-        // --- State Management ---
         let currentLang = 'en';
 
-        // Detect Language
         const userLang = navigator.language || navigator.userLanguage; 
         if (userLang.startsWith('de')) {
             currentLang = 'de';
         }
 
-        // --- DOM Elements ---
         const projectsGrid = document.getElementById('projects-grid');
         const modalBackdrop = document.getElementById('modal-backdrop');
         const modalContent = document.getElementById('modal-content');
@@ -266,18 +213,14 @@
         const langToggleBtn = document.getElementById('lang-toggle');
         const moreProjectsText = document.getElementById('more-projects-text');
 
-        // --- Functions ---
-
         function updateUIText() {
             const t = uiText[currentLang];
             document.getElementById('hero-title').innerText = t.heroTitle;
             document.getElementById('hero-subtitle').innerText = t.heroSubtitle;
             document.getElementById('current-lang-text').innerText = currentLang.toUpperCase();
             
-            // Update "More Projects" button text
             if(moreProjectsText) moreProjectsText.innerText = t.moreProjects;
             
-            // Re-render grid to update button text and content
             renderProjects();
         }
 
@@ -309,7 +252,6 @@
         }
 
         function openModal(project) {
-            // Populate Content
             document.getElementById('modal-title').innerText = project.title;
             document.getElementById('modal-type').innerText = project.type[currentLang];
             document.getElementById('modal-desc').innerText = project.desc[currentLang];
@@ -319,15 +261,13 @@
             iconDiv.innerHTML = `<i class="fa-solid ${project.icon}"></i>`;
 
             const actionsDiv = document.getElementById('modal-actions');
-            actionsDiv.innerHTML = ''; // Clear previous
+            actionsDiv.innerHTML = ''; 
             
             const contactDiv = document.getElementById('modal-contact');
             
-            // Handle Link Buttons
             if (project.links && project.links.length > 0) {
                 contactDiv.classList.add('hidden');
                 
-                // Add header for links
                 const header = document.createElement('h4');
                 header.className = 'text-sm text-slate-500 font-semibold mb-2';
                 header.innerText = uiText[currentLang].selectOption;
@@ -338,7 +278,6 @@
                     btn.href = link.url;
                     btn.target = '_blank';
                     
-                    // Style logic based on link type
                     let btnClasses = 'flex items-center justify-center gap-3 w-full py-3 rounded-xl font-medium transition-all duration-200 ';
                     
                     if (link.style === 'github') {
@@ -346,7 +285,6 @@
                     } else if (link.style === 'discord') {
                         btnClasses += 'bg-[#5865F2] hover:bg-[#4752C4] text-white shadow-lg shadow-indigo-500/20';
                     } else {
-                        // Primary / Modrinth
                         btnClasses += 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20';
                     }
 
@@ -356,7 +294,6 @@
                 });
             }
 
-            // Handle Contact Info (Special case for Hosting)
             if (project.isContact) {
                 contactDiv.classList.remove('hidden');
                 document.getElementById('modal-contact-text').innerText = project.contactText[currentLang];
@@ -364,15 +301,13 @@
                 contactDiv.classList.add('hidden');
             }
 
-            // Show Modal
             modalBackdrop.classList.remove('hidden');
-            // Small delay to allow display:block to apply before opacity transition
             setTimeout(() => {
                 modalBackdrop.classList.remove('opacity-0');
                 modalContent.classList.remove('scale-95');
                 modalContent.classList.add('scale-100');
             }, 10);
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal() {
@@ -383,26 +318,22 @@
             setTimeout(() => {
                 modalBackdrop.classList.add('hidden');
                 document.body.style.overflow = '';
-            }, 300); // Match transition duration
+            }, 300); 
         }
 
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'de' : 'en';
             updateUIText();
         }
-
-        // --- Event Listeners ---
         
         closeModalBtn.addEventListener('click', closeModal);
         
-        // Close modal when clicking outside
         modalBackdrop.addEventListener('click', (e) => {
             if (e.target === modalBackdrop) {
                 closeModal();
             }
         });
 
-        // Close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !modalBackdrop.classList.contains('hidden')) {
                 closeModal();
@@ -411,7 +342,6 @@
 
         langToggleBtn.addEventListener('click', toggleLanguage);
 
-        // Initialization
         updateUIText();
 
     </script>
