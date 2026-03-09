@@ -44,14 +44,12 @@
       min-height: 100dvh;
     }
 
-    /* Background Canvas */
     canvas#bg {
       position: fixed; inset: 0; z-index: -1;
       filter: blur(0.3px); opacity: .35;
       pointer-events: none;
     }
 
-    /* Layout */
     .wrap {
       min-height: 100dvh;
       display: grid;
@@ -59,7 +57,6 @@
       padding: 24px;
     }
 
-    /* Card Design */
     .card {
       width: min(92vw, 480px);
       background: var(--card);
@@ -76,7 +73,6 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Profile Picture */
     .pfp {
       width: 104px; height: 104px;
       border-radius: 50%;
@@ -92,7 +88,6 @@
     h1 { margin: 0; text-align: center; font-size: 1.45rem; font-weight: 800; letter-spacing: .1px; }
     .handle { text-align: center; margin: 6px 0 18px; color: var(--muted); font-size: .95rem; }
 
-    /* Buttons */
     .btns { display: grid; gap: 10px; margin-top: 6px; }
 
     .btn {
@@ -116,9 +111,8 @@
     .btn:hover:after { box-shadow: 0 0 0 6px var(--ring); }
     .btn i { width: 1.2rem; text-align: center; }
 
-    /* Button Variants */
     .accent { --bg: linear-gradient(135deg, #0b2e4a, #0c2440); --bd: #224c77; }
-    .full { width: 100%; } /* Utility for full width buttons */
+    .full { width: 100%; }
     
     .highlight {
       border-color: #00ff88; color: #00ff88;
@@ -134,7 +128,6 @@
 
     .footer { text-align: center; margin-top: 14px; font-size: .8rem; color: #93a5c6; opacity: .85; }
 
-    /* Modal & Overlay */
     .overlay {
       position: fixed; inset: 0; display: none;
       align-items: center; justify-content: center;
@@ -212,37 +205,31 @@
 
       <nav class="btns" aria-label="Linksammlung">
         
-        <!-- Email -->
-        <a class="btn highlight" href="mailto:dinu@dinushay.de">
+        <a class="btn highlight" href="https://dinushay.de/contact">
           <i class="fa-solid fa-envelope"></i>
-          <span>Email</span>
+          <span id="contactLabel">Kontakt</span>
         </a>
 
-        <!-- Projekte -->
         <a class="btn" href="https://dinushay.de/projekte">
           <i class="fa-solid fa-diagram-project"></i>
           <span id="projectsLabel">Projekte</span>
         </a>
 
-        <!-- GitHub -->
         <a class="btn" href="https://github.com/dinushay" target="_blank" rel="noopener">
           <i class="fa-brands fa-github"></i>
           <span>GitHub</span>
         </a>
 
-        <!-- Twitch -->
         <a class="btn" href="https://twitch.tv/dinu_shay" target="_blank" rel="noopener">
           <i class="fa-brands fa-twitch"></i>
           <span>Twitch</span>
         </a>
 
-        <!-- TikTok -->
         <a class="btn" href="https://tiktok.com/@dinu_shay" target="_blank" rel="noopener">
           <i class="fa-brands fa-tiktok"></i>
           <span>TikTok</span>
         </a>
 
-        <!-- Discord Modal Trigger -->
         <button class="btn" id="discordBtn" type="button">
           <i class="fa-brands fa-discord"></i>
           <span>Discord</span>
@@ -254,7 +241,6 @@
     </section>
   </main>
 
-  <!-- Discord Modal -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dlg-title">
       <header>
@@ -262,7 +248,6 @@
         <button class="close" id="closeDlg" aria-label="Schließen">&times;</button>
       </header>
       <div class="content">
-        <!-- Username Copy Section -->
         <p id="discordIntro">Mein Discord-Name ist:</p>
         <div class="discord-box">
           <span class="discord-handle" id="handleText">dinu_shay</span>
@@ -272,7 +257,6 @@
         </div>
         <div class="hint" id="discordHint">Klicke auf <b>Kopieren</b>, um den Namen in die Zwischenablage zu übernehmen.</div>
 
-        <!-- NEW: Invite Link Section -->
         <div class="invite-sep">
           <p class="invite-text" id="inviteIntro">Oder tritt direkt dem Server bei:</p>
           <a class="btn accent full" href="https://discord.gg/wYqGmafvQR" target="_blank" rel="noopener">
@@ -288,27 +272,25 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
-      /* --- 1. Language Detection & Localization --- */
       const isEnglish = (navigator.language || navigator.userLanguage).startsWith('en');
 
       if (isEnglish) {
-        // Translate Projects Button
+        const contactLabel = document.getElementById('contactLabel');
+        if (contactLabel) contactLabel.textContent = "Contact";
+
         const projectsLabel = document.getElementById('projectsLabel');
         if (projectsLabel) projectsLabel.textContent = "Projects";
 
-        // Update Discord Modal Text
         document.getElementById('discordIntro').textContent = "My Discord username is:";
         document.getElementById('discordHint').innerHTML = "Click <b>Copy</b> to copy the username to your clipboard.";
         document.getElementById('copyLabel').textContent = "Copy";
         document.getElementById('closeDlg').setAttribute('aria-label', "Close");
         
-        // Translate new Invite Text
         document.getElementById('inviteIntro').textContent = "Or join the server directly:";
         document.getElementById('btnJoin').textContent = "Join Server";
       }
 
 
-      /* --- 2. Modal Logic --- */
       const overlay = document.getElementById('overlay');
       const discordBtn = document.getElementById('discordBtn');
       const closeDlg = document.getElementById('closeDlg');
@@ -335,12 +317,10 @@
       closeDlg.addEventListener('click', closeOverlay);
       overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
 
-      // Close on Escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && overlay.classList.contains('show')) closeOverlay();
       });
 
-      // Copy Functionality
       copyBtn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(handleText);
@@ -354,7 +334,7 @@
 
           setTimeout(() => {
             copyBtn.innerHTML = originalIcon;
-            copyBtn.style.background = ''; // reset to CSS default
+            copyBtn.style.background = '';
             copyBtn.style.borderColor = '';
           }, 2000);
 
@@ -365,7 +345,6 @@
       });
 
 
-      /* --- 3. Particle Background --- */
       const c = document.getElementById('bg');
       const ctx = c.getContext('2d');
       let w, h, parts;
@@ -374,7 +353,6 @@
         w = c.width = window.innerWidth;
         h = c.height = window.innerHeight;
         
-        // Dynamic particle count based on screen area
         const count = Math.round((w * h) / 22000);
         
         parts = new Array(count).fill(0).map(() => ({
@@ -395,7 +373,6 @@
           p.x += p.vx;
           p.y += p.vy;
 
-          // Wrap around edges
           if (p.x < -5) p.x = w + 5;
           if (p.x > w + 5) p.x = -5;
           if (p.y < -5) p.y = h + 5;
