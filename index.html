@@ -179,14 +179,6 @@
     }
     .copy:active { transform: translateY(1px); }
 
-    .invite-sep {
-      margin: 20px 0 16px;
-      border-top: 1px solid #1e365a;
-      padding-top: 16px;
-      text-align: center;
-    }
-    .invite-text { margin: 0 0 12px; font-size: 0.95rem; color: #a9c0e6; }
-
     .hint { margin-top: 12px; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
 
     @media (max-width: 420px) { .card { padding: 22px 16px; } }
@@ -208,11 +200,6 @@
         <a class="btn highlight" href="https://dinushay.de/contact">
           <i class="fa-solid fa-envelope"></i>
           <span id="contactLabel">Kontakt</span>
-        </a>
-
-        <a class="btn" href="https://dinushay.de/projekte">
-          <i class="fa-solid fa-diagram-project"></i>
-          <span id="projectsLabel">Projekte</span>
         </a>
 
         <a class="btn" href="https://github.com/dinushay" target="_blank" rel="noopener">
@@ -256,15 +243,6 @@
           </button>
         </div>
         <div class="hint" id="discordHint">Klicke auf <b>Kopieren</b>, um den Namen in die Zwischenablage zu übernehmen.</div>
-
-        <div class="invite-sep">
-          <p class="invite-text" id="inviteIntro">Oder tritt direkt dem Server bei:</p>
-          <a class="btn accent full" href="https://discord.gg/pkUBGrEwX6" target="_blank" rel="noopener">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i>
-            <span id="btnJoin">Beitreten</span>
-          </a>
-        </div>
-
       </div>
     </div>
   </div>
@@ -278,16 +256,10 @@
         const contactLabel = document.getElementById('contactLabel');
         if (contactLabel) contactLabel.textContent = "Contact";
 
-        const projectsLabel = document.getElementById('projectsLabel');
-        if (projectsLabel) projectsLabel.textContent = "Projects";
-
         document.getElementById('discordIntro').textContent = "My Discord username is:";
         document.getElementById('discordHint').innerHTML = "Click <b>Copy</b> to copy the username to your clipboard.";
         document.getElementById('copyLabel').textContent = "Copy";
         document.getElementById('closeDlg').setAttribute('aria-label', "Close");
-        
-        document.getElementById('inviteIntro').textContent = "Or join the server directly:";
-        document.getElementById('btnJoin').textContent = "Join Server";
       }
 
 
@@ -394,4 +366,3 @@
   </script>
 </body>
 </html>
-
